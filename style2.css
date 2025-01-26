@@ -1,0 +1,151 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+ 
+  background-color: #003399;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  background: linear-gradient(135deg, #C39B4E, #F4EFEA, #35495E);
+  background-size: 400% 400%;
+  animation: gradientBG 10s ease infinite;
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.container {
+  text-align: center;
+  width: 100%;
+  max-width: 800px;
+}
+
+.logo {
+  margin-bottom: 0.5rem;
+}
+
+.logo img {
+  width: 200px;
+  height: auto;
+}
+
+.header h1 {
+  font-family: Impact, Charcoal, sans-serif;
+  font-size: 40px;
+  letter-spacing: 0.8px;
+  word-spacing: 3px;
+  color: #2830c9;
+  font-weight: 700;
+  text-decoration: none solid rgb(68, 68, 68);
+  font-style: normal;
+  font-variant: normal;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.5rem;
+}
+
+
+button {
+  font-size: 18px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: inline-block;
+  text-align: center;
+  font-weight: bold;
+  padding: 0.7em 2em;
+  border: 3px solid #2881C9;
+  border-radius: 2px;
+  position: relative;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.1);
+  color: #2881C9;
+  text-decoration: none;
+  transition: 0.3s ease all;
+  z-index: 1;
+}
+
+button:before {
+  transition: 0.5s all ease;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  right: 50%;
+  bottom: 0;
+  opacity: 0;
+  content: '';
+  background-color: #4950DB;
+  z-index: -1;
+}
+
+button:hover, button:focus {
+  color: white;
+}
+
+button:hover:before, button:focus:before {
+  transition: 0.5s all ease;
+  left: 0;
+  right: 0;
+  opacity: 1;
+}
+
+button:active {
+  transform: scale(0.9);
+}
+
+ 
+.button-container {
+ 
+  justify-content:space-between;
+  
+  margin-bottom: 1rem;
+ }
+.button-container2 {
+ 
+  justify-content:center;
+  margin-bottom: 10rem;
+ }
+.title {
+
+font-size: 2rem;
+}
+
+
+.text-style {
+   /* Clean and modern font */
+  font-size: 1.8rem; /* Smaller size for compact design */
+  color: #FFFFFF; /* High contrast against the blue background */
+  background-color: #2830C9; /* Rich blue background for contrast */
+  padding: 10px 10px; /* Reduces spacing for a compact feel */
+  border-radius: 8px; /* Subtle rounded corners for elegance */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25); /* Softer shadow for subtle depth */
+  font-weight: 700; /* Bold but less heavy */
+  text-align: center; /* Center alignment */
+  text-transform: uppercase; /* Uniform text styling */
+  letter-spacing: 0.05em; /* Slight spacing for readability */
+  
+}
+.wrapper {
+ 
+width:50%;
+margin-left: 20rem;
+
+}
+.highlight {
+  color: #C39B4E; /* Gold for highlights */
+  font-weight: 600; /* Slightly less bold for balance */
+  font-size: 1.5rem; /* Smaller for contrast */
+}
+
