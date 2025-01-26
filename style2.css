@@ -75,6 +75,7 @@ button {
   text-decoration: none;
   transition: 0.3s ease all;
   z-index: 1;
+  outline: none; /* Remove focus outline */
 }
 
 button:before {
@@ -90,20 +91,31 @@ button:before {
   z-index: -1;
 }
 
-button:hover, button:focus {
+button:hover {
   color: white;
 }
 
-button:hover:before, button:focus:before {
-  transition: 0.5s all ease;
+button:hover:before {
   left: 0;
   right: 0;
   opacity: 1;
 }
 
+button:focus {
+  outline: none; /* Ensure no outline styling on focus */
+}
+
 button:active {
   transform: scale(0.9);
+  color: white;
 }
+
+button:active:before {
+  opacity: 1;
+  left: 0;
+  right: 0;
+}
+
 
  
 .button-container {
