@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>Mahidol Quiz Challenge</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: "Segoe UI", Tahoma, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #111;
+        }
+
+        .game-container {
+            width: 800px;
+            max-width: 95vw;
+            background: linear-gradient(180deg, #0d47a1, #1565c0);
+            color: #fff;
+            padding: 30px 40px;
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 16px;
+            opacity: 0.8;
+            margin-bottom: 25px;
+        }
+
+        .question {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option-btn {
+            width: 100%;
+            padding: 12px 18px;
+            font-size: 18px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+            background: #ffffff;
+            color: #000000;
+        }
+
+        .option-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            background: #ffeb3b;
+        }
+
+        .option-btn.correct {
+            background: #4caf50;
+            color: #fff;
+        }
+
+        .option-btn.wrong {
+            background: #f44336;
+            color: #fff;
+        }
+
+        .bottom-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            padding: 10px 18px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            background: #ffca28;
+            color: #000;
+            font-weight: 600;
+            transition: background 0.15s ease, transform 0.1s ease;
+        }
+
+        .btn-primary:hover {
+            background: #ffe082;
+            transform: translateY(-1px);
+        }
+
+        .center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="game-container" id="game">
+    <!-- เนื้อหาเกมจะถูกสร้างด้วย JavaScript -->
+</div>
+
+<script>
+    // ---------------- ข้อมูลคำถาม ----------------
+    const questions = [
+        {
+            q: "สัตว์ประจำถิ่น (อย่างไม่เป็นทางการ) ของศาลายาคือ?",
+            options: ["กระรอก", "ตัวเงินตัวทอง", "แมว", "นกพิราบ"],
+            answer: 1,
+        },
+        {
+            q: "ต้นไม้ประจำมหาวิทยาลัยมหิดล คือ?",
+            options: ["ต้นสัก", "ต้นราชพฤกษ์", "ต้นกันภัยมหิดล", "ต้นยูคาลิปตัส"],
+            answer: 2,
+        },
+        {
+            q: "อาคารสัญลักษณ์โดดเด่นที่ใช้จัดพิธีรับปริญญา คือ?",
+            options: ["มหิดลสิทธาคาร", "ตึกอธิการบดี", "ตึก SC", "หอสมุด"],
+            answer: 0,
+        },
+        {
+            q: "โรงอาหาร MLC มีกี่ชั้น?",
+            options: ["1", "2", "3", "4"],
+            answer: 1,
+        },
+        {
+            q: "ตัวอักษร M จาก MAHIDOL มีความหมายว่าอะไร?",
+            options: ["มุ่งผลเพื่อผู้อื่น", "สร้างสรรค์สิ่งใหม่", "รู้แจ้ง รู้จริง สมเหตุ สมผล", "ใฝ่ใจเป็นผู้นำ"],
+            answer: 2,
+        },
+        
+        {
+            q: "คณะใดคือคณะแรกของมหาวิทยาลัยมหิดล?",
+            options: ["วิทยาศาสตร์", "วิศวกรรมศาสตร์", "ศิลปศาสตร์", "แพทย์"],
+            answer: 3,
+        },
+         {
+            q: "มหิดลมีกี่วิทยาเขต?",
+            options: ["2", "4", "6", "8"],
+            answer: 2,
+        },
+    ];
+
+    const gameEl = document.getElementById("game");
+
+    let currentIndex = 0;
+    let score = 0;
+    let isLocked = false; // กันกดรัว
+
+    // ---------------- ฟังก์ชันแสดงหน้าเริ่ม ----------------
+    function showStartScreen() {
+        currentIndex = 0;
+        score = 0;
+
+        gameEl.innerHTML = `
+            <div class="title">Mahidol Quiz Challenge</div>
+            <div class="subtitle">มาลองดูกัน ว่าคุณรู้จักมหิดลมากแค่ไหน 💙
+                จัดทำโดย 6713249 , 6708249</div>
+            <div class="center" style="margin-top:20px;">
+                <button class="btn-primary" id="startBtn">เริ่มเล่น</button>
+            </div>
+        `;
+
+        document.getElementById("startBtn").addEventListener("click", () => {
+            showQuestion();
+        });
+    }
+
+    // ---------------- ฟังก์ชันแสดงคำถาม ----------------
+    function showQuestion() {
+        isLocked = false;
+        const q = questions[currentIndex];
+
+        gameEl.innerHTML = `
+            <div class="title">Mahidol Quiz</div>
+            <div class="subtitle">คำถามที่ ${currentIndex + 1} จาก ${questions.length}</div>
+
+            <div class="question">${q.q}</div>
+
+            <div class="options" id="options"></div>
+
+            <div class="bottom-bar">
+                <div>คะแนนปัจจุบัน: <b>${score}</b></div>
+                <div>ข้อถัดไปจะเปลี่ยนอัตโนมัติเมื่อเลือกคำตอบ</div>
+            </div>
+        `;
+
+        const optionsContainer = document.getElementById("options");
+
+        q.options.forEach((opt, idx) => {
+            const btn = document.createElement("button");
+            btn.className = "option-btn";
+            btn.textContent = opt;
+
+            btn.addEventListener("click", () => handleAnswer(idx, btn));
+
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    // ---------------- ฟังก์ชันตอนตอบ ----------------
+    function handleAnswer(selectedIndex, buttonEl) {
+        if (isLocked) return;
+        isLocked = true;
+
+        const correctIndex = questions[currentIndex].answer;
+
+        const optionButtons = document.querySelectorAll(".option-btn");
+
+        optionButtons.forEach((btn, idx) => {
+            if (idx === correctIndex) {
+                btn.classList.add("correct");
+            } else if (idx === selectedIndex) {
+                btn.classList.add("wrong");
+            }
+            btn.disabled = true;
+        });
+
+        if (selectedIndex === correctIndex) {
+            score++;
+        }
+
+        // หน่วงนิดนึงให้เห็นสี ก่อนเปลี่ยนคำถาม
+        setTimeout(() => {
+            currentIndex++;
+            if (currentIndex < questions.length) {
+                showQuestion();
+            } else {
+                showEndScreen();
+            }
+        }, 900);
+    }
+
+    // ---------------- ฟังก์ชันหน้าจบเกม ----------------
+    function showEndScreen() {
+        const maxScore = questions.length;
+        let message = "";
+
+        if (score === maxScore) {
+            message = "สุดยอด! แฟนพันธุ์แท้มหิดลของจริง 🎓";
+        } else if (score >= Math.ceil(maxScore * 0.6)) {
+            message = "ถือว่าแน่นใช้ได้เลย! ลองอีกสักรอบไหม? 😉";
+        } else {
+            message = "ยังมีอะไรให้ค้นหาอีกเยอะเลยในมหิดล 💙";
+        }
+
+        gameEl.innerHTML = `
+            <div class="title">จบเกมแล้ว!</div>
+            <div class="subtitle">คุณได้คะแนน <b>${score}</b> จากทั้งหมด <b>${maxScore}</b></div>
+
+            <div class="center" style="margin: 25px 0; font-size: 20px;">
+                ${message}
+            </div>
+
+            <div class="center">
+                <button class="btn-primary" id="restartBtn">เล่นอีกครั้ง</button>
+            </div>
+        `;
+
+        document.getElementById("restartBtn").addEventListener("click", () => {
+            showStartScreen();
+        });
+    }
+
+    // เริ่มที่หน้า Start
+    showStartScreen();
+</script>
+
+</body>
+</html>
