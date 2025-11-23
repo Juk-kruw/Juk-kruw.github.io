@@ -161,10 +161,14 @@
     ];
 
     const gameEl = document.getElementById("game");
+   const QUESTIONS_PER_GAME = 5;
 
+    // ตัวแปรสำหรับเกมจริง
+    let questions = [];       // จะถูกสุ่มจาก ALL_QUESTIONS
     let currentIndex = 0;
     let score = 0;
-    let isLocked = false; // กันกดรัว
+    let isLocked = false;
+ // กันกดรัว
 
     // ---------------- ฟังก์ชันแสดงหน้าเริ่ม ----------------
     function showStartScreen() {
@@ -287,3 +291,4 @@
 
 </body>
 </html>
+
